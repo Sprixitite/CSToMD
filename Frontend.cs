@@ -4,13 +4,13 @@ using System.IO;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace SprixDocGen {
+namespace CSToMD {
 
     public static class Program {
-        public static void Main(string[] args) => SprixDocGen.gen();
+        public static void Main(string[] args) => CSToMD.gen();
     }
 
-    public static class SprixDocGen {
+    public static class CSToMD {
 
         internal const bool DEBUG = false;
 

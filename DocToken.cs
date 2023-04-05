@@ -2,12 +2,12 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
-using SprixDocGen;
+using CSToMD;
 
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 
-namespace SprixDocGen {
+namespace CSToMD {
 
     internal abstract class DocToken {
         

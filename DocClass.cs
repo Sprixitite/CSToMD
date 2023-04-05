@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 #nullable enable
 
-namespace SprixDocGen {
+namespace CSToMD {
 
     internal sealed class DocClass {
 
@@ -57,7 +57,7 @@ namespace SprixDocGen {
             }
 
             foreach (DocClass child in children) {
-                sb.Append("\n" + (SprixDocGen.DEBUG ? "\n" : ""));
+                sb.Append("\n" + (CSToMD.DEBUG ? "\n" : ""));
                 sb.Append(child.ToString());
             }
 

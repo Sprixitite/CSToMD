@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
 
-namespace SprixDocGen {
+namespace CSToMD {
 
     public static class SignatureExtensions
     {
