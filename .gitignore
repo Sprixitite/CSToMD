@@ -1,3 +1,4 @@
 *.md
+!README.md
 /bin
 /obj
