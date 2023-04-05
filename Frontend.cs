@@ -6,10 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace CSToMD {
 
-    public static class Program {
-        public static void Main(string[] args) => CSToMD.gen();
-    }
-
     public static class CSToMD {
 
         internal const bool DEBUG = false;

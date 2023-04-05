@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- <TargetFramework>netstandard2.0</TargetFramework> -->
-    <TargetFramework>net6.0</TargetFramework>
-    <OutputType>exe</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <!-- <TargetFramework>net6.0</TargetFramework>
+    <OutputType>exe</OutputType> -->
   </PropertyGroup>
 
   <ItemGroup>
