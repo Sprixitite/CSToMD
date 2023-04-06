@@ -1,11 +1,6 @@
 using System;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Text;
-using CSToMD;
-
-using Mono.Cecil;
-using Mono.Cecil.Cil;
 
 namespace CSToMD {
 

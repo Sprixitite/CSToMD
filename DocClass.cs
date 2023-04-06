@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-#nullable enable
-
 namespace CSToMD {
 
     internal sealed class DocClass {
@@ -31,7 +29,7 @@ namespace CSToMD {
 
         private List<DocToken> members;
         private List<DocClass> children;
-        private DocClass? parent;
+        private DocClass parent;
         private Type t;
 
         public override string ToString() {
