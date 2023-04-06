@@ -30,27 +30,5 @@ namespace CSToMD {
         }
 
     }
-                                                                                                                                                                                                            
-    public class A {
-        public int a;
-        protected string b;
-        private protected bool c;
-        static internal A d;
-        internal Dictionary<string, B<int, string>> my_list_of_b {
-            get;
-            private protected set;
-        }
-        private B<int, string> my_method_a(string idx) { throw new NotImplementedException(); }
-
-        
-    }
-
-    internal class B<T1, T2> : A {
-        public static void my_method_b() {}
-        readonly static char f = 'f';
-        static Random RANDOM = new Random();
-        const float pi = 3.14159f;
-        public event Action A;
-    }
 
 }
