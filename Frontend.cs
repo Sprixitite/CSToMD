@@ -29,6 +29,24 @@ namespace CSToMD {
 
         }
 
+        public static void gen_per_type() {
+            FileStream markdown_file = File.Open("./output.md", FileMode.Create);
+            StreamWriter markdown_out = new StreamWriter(markdown_file);
+            Assembly calling_assembly = Assembly.GetCallingAssembly();
+            foreach ( Type t in calling_assembly.GetTypes() ) {
+                if (Attribute.GetCustomAttribute(t, typeof(CompilerGeneratedAttribute)) != null) continue;
+                if (t.IsNested) continue;
+                string nextline = new DocClass(t).ToString();
+                markdown_out.WriteLine("| Parent Object | Signature | Datatype | Member Type | Description | Pseudocode |");
+                markdown_out.WriteLine("|:-:|:--|:-:|:-:|:--|:--|");
+                markdown_out.WriteLine(nextline);
+                markdown_out.WriteLine();
+                if (DEBUG) Console.WriteLine(nextline + "\n");
+            }
+            markdown_out.Close();
+            markdown_file.Close();
+        }
+
     }
 
 }
