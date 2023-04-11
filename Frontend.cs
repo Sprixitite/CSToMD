@@ -20,7 +20,7 @@ namespace CSToMD {
             foreach ( Type t in calling_assembly.GetTypes() ) {
                 if (Attribute.GetCustomAttribute(t, typeof(CompilerGeneratedAttribute)) != null) continue;
                 if (t.IsNested) continue;
-                string nextline = new DocClass(t).ToString();
+                string nextline = new DocClass(t).ToString().Replace("<", "\\<").Replace(">", "\\>").Replace("&", "");
                 markdown_out.WriteLine(nextline);
                 if (DEBUG) Console.WriteLine(nextline + "\n");
             }
@@ -36,7 +36,7 @@ namespace CSToMD {
             foreach ( Type t in calling_assembly.GetTypes() ) {
                 if (Attribute.GetCustomAttribute(t, typeof(CompilerGeneratedAttribute)) != null) continue;
                 if (t.IsNested) continue;
-                string nextline = new DocClass(t).ToString();
+                string nextline = new DocClass(t).ToString().Replace("<", "\\<").Replace(">", "\\>").Replace("&", "");
                 markdown_out.WriteLine("| Parent Object | Signature | Datatype | Member Type | Description | Pseudocode |");
                 markdown_out.WriteLine("|:-:|:--|:-:|:-:|:--|:--|");
                 markdown_out.WriteLine(nextline);

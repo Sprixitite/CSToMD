@@ -5,21 +5,6 @@ using System.Text;
 namespace CSToMD {
 
     internal abstract class DocToken {
-        
-        interface ISampleInterface
-        {
-            void SampleMethod();
-        }
-
-        enum SampleEnum {
-            SAMPLE_VAL_1,
-            SAMPLE_VAL_2
-        }
-
-        struct MyStruct {
-            int a;
-            int b;
-        }
 
         protected DocToken(MemberInfo mi, Type o) {
             token_type = mi.MemberType;

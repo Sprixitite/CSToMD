@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
@@ -28,7 +29,7 @@ namespace CSToMD {
             var primaryDef = LeastRestrictiveVisibility(getter,setter);
 
                
-            BuildReturnSignature(sigBuilder, primaryDef, include_type);
+            BuildReturnSignature(sigBuilder, primaryDef, include_type, true);
             sigBuilder.Append(" { ");
             if (getter!=null) {
                 if (primaryDef != getter) {
@@ -164,7 +165,7 @@ namespace CSToMD {
                 
             var sigBuilder = new StringBuilder();
 
-            BuildReturnSignature(sigBuilder,method, include_type);
+            BuildReturnSignature(sigBuilder,method, include_type, false);
 
             BuildParamsSignature(sigBuilder, method);
 
@@ -228,6 +229,15 @@ namespace CSToMD {
                 return TypeName(nullableType) + "?";
             }
 
+            if (type.GetInterfaces().Contains(typeof(System.Runtime.CompilerServices.ITuple))) {
+                string tuple = "(";
+                Type[] generic_args = type.GenericTypeArguments;
+                for (int i=0; i<generic_args.Length; i++) {
+                    tuple = tuple + TypeName(generic_args[i]) + ( i == generic_args.Length-1 ? "" : "," );
+                }
+                tuple = tuple + ")";
+                return tuple;
+            }
 
             if (!type.IsGenericType)
             {
@@ -241,7 +251,7 @@ namespace CSToMD {
                 {
                     case "String": return "string";
                     case "Int16": return "short";
-                    case "UInt16": return "ushort";          
+                    case "UInt16": return "ushort";
                     case "Int32": return "int";
                     case "UInt32": return "uint";
                     case "Int64": return "long";
@@ -279,7 +289,7 @@ namespace CSToMD {
             return sb.ToString();
         }
 
-        private static void BuildReturnSignature(StringBuilder sigBuilder, MethodInfo method, bool include_type)
+        private static void BuildReturnSignature(StringBuilder sigBuilder, MethodInfo method, bool include_type, bool is_from_prop)
         {
             var firstParam = true;
             sigBuilder.Append(Visibility(method)+" ");
@@ -287,7 +297,8 @@ namespace CSToMD {
             if (method.IsStatic)
                 sigBuilder.Append("static ");
             if (include_type) sigBuilder.Append(TypeName(method.ReturnType) + " ");
-            sigBuilder.Append(method.Name);
+            if (!is_from_prop) sigBuilder.Append(method.Name);
+            else sigBuilder.Append(method.Name.Substring(4));
 
             // Add method generics
             if (method.IsGenericMethod)
@@ -386,6 +397,40 @@ namespace CSToMD {
             {
                 throw new Exception("I wasn't able to parse the visibility of this method.");
             }
+        }
+
+        public static bool IsTupleType(this Type type, bool checkBaseTypes = false)
+        {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
+            if (type == typeof(Tuple))
+                return true;
+
+            while (type != null)
+            {
+                if (type.IsGenericType)
+                {
+                    var genType = type.GetGenericTypeDefinition();
+                    if (genType == typeof(Tuple<>)
+                        || genType == typeof(Tuple<,>)
+                        || genType == typeof(Tuple<,,>)
+                        || genType == typeof(Tuple<,,,>)
+                        || genType == typeof(Tuple<,,,,>)
+                        || genType == typeof(Tuple<,,,,,>)
+                        || genType == typeof(Tuple<,,,,,,>)
+                        || genType == typeof(Tuple<,,,,,,,>)
+                        || genType == typeof(Tuple<,,,,,,,>))
+                        return true;
+                }
+
+                if (!checkBaseTypes)
+                    break;
+
+                type = type.BaseType;
+            }
+
+            return false;
         }
 
         private static bool IsParamArray(ParameterInfo info)
